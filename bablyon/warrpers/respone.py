@@ -3,6 +3,7 @@ import typing as t
 from bablyon.utils import parser_into_http_headers
 from bablyon.utils import parser_into_http_cookies
 
+
 class Respone:
     r"""
         Respone class is a way to interpretation the raw 
@@ -64,6 +65,7 @@ class Respone:
 
     def add_cookie(self,key:str,value:str) -> None:
         self.cookies[key] = value
+
     
     def _parase_headers(self) -> t.List:
         if self.cookies != {}:

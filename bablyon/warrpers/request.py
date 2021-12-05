@@ -4,6 +4,8 @@ from bablyon.utils import header_parser
 from bablyon.utils import cookies_parser
 from urllib.parse import parse_qsl
 
+import cgi,io
+
 class Request:
     r"""
         Request class a paraser for the `receive` args in the ASGI handler
@@ -82,6 +84,52 @@ class Request:
     @property
     def text(self) -> str:
         return self.body
+
+    def _load_data(self) -> cgi.FieldStorage:
+        data = {}
+        files = {}
+
+        self._form = {}
+        self._files = {}
+
+        if self.headers.get('content-type',' ; ').split(';')[0] != 'multipart/form-data':
+            return
+
+        if self.method not in ('POST','PUT'):
+            return 
+        
+        fields:cgi.FieldStorage = cgi.FieldStorage(
+            fp=io.BytesIO(self.text),
+            environ={
+                'REQUEST_METHOD':self.method,
+                'CONTENT_TYPE':self.headers.get('content-type'),
+                'CONTENT_LENGTH':self.headers.get('content-length')
+            },
+            keep_blank_values=True
+        )
+        for key in fields:
+            
+            value = [fields[key]] if not isinstance(fields[key],list) else fields[key]
+
+            for item in value:
+                if getattr(item, 'filename', None) is not None:
+                    files[key] = value
+                data[key] = value
+
+        self._form = data
+        self._files = files
+
+    @property
+    def form(self) -> t.Dict:
+        if not hasattr(self, '_form'):
+            self._load_data()
+        return self._form
+
+    @property
+    def files(self) -> t.Dict:
+        if not hasattr(self, '_form'):
+            self._load_data()
+        return self._files
 
     def __repr__(self) -> str:
         return f'<Request ({self.method}) ({self.path}) at 0x{id(self)}>'
