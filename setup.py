@@ -17,7 +17,7 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    install_requires=['urllib','uvicorn'],
+    install_requires=['urllib3','uvicorn'],
     packages=["bablyon"],
     python_requires=">=3.6",
 )
