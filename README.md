@@ -1,6 +1,9 @@
 # Bablyon 🐍
 A small ASGI web framework that you can make asynchronous web applications using [`uvicorn`](https://github.com/encode/uvicorn) with using few lines of code
 
+# Installation 
+ `python -m pip install git+https://github.com/xArty4/Bablyon`
+
 # Exmaple 
 ```py
 import bablyon
