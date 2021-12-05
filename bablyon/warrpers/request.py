@@ -73,7 +73,7 @@ class Request:
 
     @property
     def cookies(self) -> t.Dict:
-        return cookies_parser(self.headers.get('cookie',''))
+        return cookies_parser(self.headers.get('cookie',None))
 
     @property
     def session_token(self) -> str:

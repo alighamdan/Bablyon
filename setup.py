@@ -18,6 +18,6 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     install_requires=['urllib3','uvicorn'],
-    packages=setuptools.find_packages(),
+    packages=setuptools.find_packages('.'),
     python_requires=">=3.6",
 )

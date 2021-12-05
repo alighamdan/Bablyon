@@ -5,6 +5,8 @@ def header_parser(headers:list,encode:str='utf-8'):
     ) for key,value in headers )
 
 def cookies_parser(cookies:str):
+    if cookies == None:
+        return {}
     return dict( (
         cookie.split('=')[0],
         cookie.split('=')[1]
