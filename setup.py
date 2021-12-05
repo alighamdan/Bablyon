@@ -1,7 +1,14 @@
 import setuptools
+import os
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
+
+packages = []
+for dirname, dirnames, filenames in os.walk('babylon'):
+        if '__init__.py' in filenames:
+            packages.append(dirname.replace('/', '.'))
+
 
 setuptools.setup(
     name="Babylon",
@@ -18,6 +25,6 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     install_requires=['urllib3','uvicorn'],
-    packages=setuptools.find_packages(),
+    packages=packages,
     python_requires=">=3.6",
 )
