@@ -35,9 +35,7 @@ if __name__ == '__main__':
 - JSON session ❌
 - Add security to the cookies ❌
 - Add Exceptions to the box ❌
-- Add routing to the box ❌
+- Add routing to the box ✅
 - Add static files support ❌ 
-- Add websocket support ❌
-- Add datastructures to the box ❌
 - Add middleware support ✅
 - Add HTML Exceptions ❌

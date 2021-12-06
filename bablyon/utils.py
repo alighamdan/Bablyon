@@ -1,4 +1,4 @@
-import re
+import re,io
 
 def header_parser(headers:list,encode:str='utf-8'):
     return dict( (
@@ -51,3 +51,10 @@ def guess_content_type(body:str):
         return "text/html"
     else:
         return "text/plain"
+
+def guess_static_file_type(file:io.FileIO):
+    file_type = file.name.split('.')[-1]
+    if file_type == 'js':
+        return 'application/javascript'
+    if file_type == 'css':
+        return 'text/css'

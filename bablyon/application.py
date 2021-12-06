@@ -5,6 +5,8 @@ from bablyon.warrpers import Request,Respone
 from bablyon.utils import guess_content_type
 
 import typing as t
+import glob
+import os
 import re
 
 try:
@@ -21,6 +23,17 @@ class Bablyon:
         self.routers = routers
         self.middlewares = middlewares
 
+    def mount(self,path:str,handler:t.Awaitable):
+        for filename in glob.iglob(path + '**/**', recursive=True):
+            path = filename.replace(u'\u005c','/').replace(path,'')
+
+            self.routers.append(
+                Router(
+                    url=path,
+                    func=handler
+                )
+            )
+
     async def build_asgi(self,request:Request):
         for router in self.routers:
             match = re.match(router.pattren, request.path)
@@ -31,18 +44,20 @@ class Bablyon:
             
                 request.match_info = match.groupdict()
                 resp = await router.func(request)
-                
+
                 if isinstance(resp,str):
                     return Respone(
                         body=resp,
                         content_type=guess_content_type(resp)
                     )
 
-                if isinstance(resp,dict):
+                elif isinstance(resp,dict):
                     return Respone(
                         body=dumps(resp),
                         content_type='application/json'
                     )
+                
+                return resp
 
     def __call__(self) -> t.Any:
         return to_asgi(

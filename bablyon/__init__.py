@@ -20,8 +20,12 @@ from .utils import parser_into_http_cookies
 from .utils import parser_into_http_headers
 
 from .utils import format_pattern
+from .utils import guess_content_type
+from .utils import guess_static_file_type
 
 from .tools import render
+
+from .staticfile import StaticFile
 
 __author__ = 'Zaid Ali'
 __name__ = 'Bablyon'

@@ -132,3 +132,5 @@ test.py
 test2.py
 test.html
 test3.py
+/static
+/static/*
