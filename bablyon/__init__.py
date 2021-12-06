@@ -14,6 +14,8 @@ from .utils import cookies_parser
 from .utils import parser_into_http_cookies
 from .utils import parser_into_http_headers
 
+from .tools import render
+
 __author__ = 'Zaid Ali'
 __name__ = 'Bablyon'
 __verison__ = '0.1'
