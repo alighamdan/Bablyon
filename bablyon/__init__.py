@@ -27,6 +27,9 @@ from .tools import render
 
 from .staticfile import StaticFile
 
+from .security import encrypt
+from .security import verfiy
+
 __author__ = 'Zaid Ali'
 __name__ = 'Bablyon'
 __verison__ = '0.1'

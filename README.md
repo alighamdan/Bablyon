@@ -36,6 +36,6 @@ if __name__ == '__main__':
 - Add security to the cookies ❌
 - Add Exceptions to the box ❌
 - Add routing to the box ✅
-- Add static files support ❌ 
+- Add static files support ✅ 
 - Add middleware support ✅
 - Add HTML Exceptions ❌

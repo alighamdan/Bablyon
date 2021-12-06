@@ -1,9 +1,13 @@
 import typing as t
 import asyncio as a
+import secrets as s
 
 from bablyon.warrpers import Request
 from bablyon.warrpers import Respone
 from bablyon.config import Config
+
+from bablyon.security import encrypt
+from bablyon.security import verfiy
 
 class HTTPRequestHandler:
 
@@ -26,28 +30,42 @@ class HTTPRequestHandler:
         body:str
     ) -> t.Any:
 
-        
+        _request = Request(
+            scope,
+            body
+        )
         request = self.config.request_class(
             scope,
             body
         )
 
+        if _request.cookies.get('.bsession',False) == False:
+            self.token = encrypt(
+                s.token_hex(16),
+                self.config.secret_key,
+                self.config.encoding
+            )
+        
         if self.config.middlewares != []:
             for mw in self.config.middlewares:
                 mw_resp = await mw(request)
 
-                if isinstance(mw_resp,Respone):
-                    for i in mw_resp._to_list():
-                        await self.send(i)
+                if mw_resp:
+                    await self._send(mw_resp)
                     return
                 else:
                     pass
 
         resp = await emit(request)
+        await self._send(resp)
 
+    async def _send(self,resp:t.List):
         if isinstance(resp,Respone):
+            if hasattr(self,'token'):
+                resp.add_cookie('.bsession',self.token)
             for i in resp._to_list():
                 await self.send(i)
+                
 
 class RequestBaseHandler:
 

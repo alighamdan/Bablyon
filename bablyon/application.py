@@ -4,9 +4,9 @@ from bablyon.config import Config
 from bablyon.warrpers import Request,Respone
 from bablyon.utils import guess_content_type
 
+import functools
 import typing as t
 import glob
-import os
 import re
 
 try:
@@ -17,11 +17,15 @@ except:
 class Bablyon:
     def __init__(
         self,
+        secret_key:str,
         routers:t.List[Router] = [],
         middlewares:list = [],
     ) -> None:
         self.routers = routers
         self.middlewares = middlewares
+        self.secret_key = secret_key
+
+        self.sessions = {}
 
     def mount(self,path:str,handler:t.Awaitable):
         for filename in glob.iglob(path + '**/**', recursive=True):
@@ -35,13 +39,23 @@ class Bablyon:
             )
 
     async def build_asgi(self,request:Request):
+        _request = Request(
+            request.scope,
+            request.body
+        )
+
         for router in self.routers:
-            match = re.match(router.pattren, request.path)
+            match = re.match(router.pattren, _request.path)
 
             if match is not None:
                 if match.re.pattern != router.pattren:
                     pass
-            
+
+                bsession = _request.cookies.get('.bsession',False)
+                if bsession != False:
+                    if bsession not in self.sessions:
+                        self.sessions[bsession] = {}
+                
                 request.match_info = match.groupdict()
                 resp = await router.func(request)
 
@@ -63,6 +77,7 @@ class Bablyon:
         return to_asgi(
             self.build_asgi,
             config=Config(
+                secret_key=self.secret_key,
                 middlewares=self.middlewares
             )
         )
