@@ -7,6 +7,7 @@ from .handlers import RequestBaseHandler
 from .application import Bablyon
 
 from .router import Router
+from .router import HTTPErrorRouter
 
 from .config import Config
 

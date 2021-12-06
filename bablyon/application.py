@@ -1,4 +1,4 @@
-from bablyon.router import Router
+from bablyon.router import Router,HTTPErrorRouter
 from bablyon.serving import to_asgi
 from bablyon.config import Config
 from bablyon.warrpers import Request,Respone
@@ -45,6 +45,8 @@ class Bablyon:
         )
 
         for router in self.routers:
+            if isinstance(router,HTTPErrorRouter):
+                pass
             match = re.match(router.pattren, _request.path)
 
             if match is not None:
@@ -57,7 +59,14 @@ class Bablyon:
                         self.sessions[bsession] = {}
                 
                 request.match_info = match.groupdict()
-                resp = await router.func(request)
+                resp = await router(request)
+
+                if isinstance(resp,Respone):
+                    if resp.status != 200:
+                        for router in self.routers:
+                            if isinstance(router,HTTPErrorRouter):
+                                if router.status_code == resp.status:
+                                    resp = await router(request)
 
                 if isinstance(resp,str):
                     return Respone(

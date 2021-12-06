@@ -18,5 +18,19 @@ class Router:
         self.is_static = is_static
 
     async def __call__(self,*args):
-        if iscoroutinefunction(self.func):
-            return await self.func
+        return await self.func(*args)
+
+class HTTPErrorRouter:
+    def __init__(
+        self,
+        status_code:str,
+        func:t.Awaitable
+    ) -> None:
+        self.status_code = status_code
+        self.func = func
+
+    async def __call__(self,*args):
+        return await self.func(*args)
+
+
+    

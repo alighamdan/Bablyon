@@ -95,7 +95,6 @@ class RequestBaseHandler:
 
         elif scope["type"] == "lifespan.shutdown": await send({"type": "lifespan.shutdown.complete"})
 
-
         elif scope["type"] == "http": 
             body = await self.recv()
             body = body.get('body')
