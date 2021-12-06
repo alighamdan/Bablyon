@@ -29,15 +29,14 @@ if __name__ == '__main__':
 - [xArty](https://github.com/xArty4)
 
 # To Do
-- Custom request class ❌
-- Custom respone class ❌
-- Add Jinjia2 to the box ❌
+- Custom request class ✅
+- Add Jinjia2 to the box ✅
 - Full session ❌
 - JSON session ❌
 - Add security to the cookies ❌
 - Add Exceptions to the box ❌
 - Add routing to the box ❌
-- Add static files support ❌
+- Add static files support ❌ 
 - Add websocket support ❌
 - Add datastructures to the box ❌
 - Add middleware support ✅

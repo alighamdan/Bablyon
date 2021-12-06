@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="Babylon",
-    version="0.3",
+    version="0.4",
     author="Zaid Ali",
     author_email="email@xarty.xyz",
     description="A small ASGI web framework",

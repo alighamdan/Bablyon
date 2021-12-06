@@ -1,3 +1,5 @@
+import re
+
 def header_parser(headers:list,encode:str='utf-8'):
     return dict( (
         key.decode(encode),
@@ -26,3 +28,26 @@ def parser_into_http_headers(headers:dict,encode:str='utf-8'):
         key.encode(encode),
         value.encode(encode),
     ) for key,value in headers.items()]
+
+# This been taken from https://github.com/hzlmn/diy-async-web-framework#route-params
+def format_pattern(path):
+    if not re.search(r":(?P<param>\w+)", path):
+        return path
+
+    regex = r""
+    last_pos = 0
+
+    for match in re.finditer(r":(?P<param>\w+)", path):
+        regex += path[last_pos: match.start()]
+        param = match.group("param")
+        regex += r"(?P<%s>\w+)" % param
+        last_pos = match.end()
+
+    return regex
+
+
+def guess_content_type(body:str):
+    if body.startswith(("<!DOCTYPE html>", "<!doctype html>", "<html>")):
+        return "text/html"
+    else:
+        return "text/plain"

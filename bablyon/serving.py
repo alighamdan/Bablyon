@@ -15,6 +15,12 @@ def asgi_application(config:Config=Config()):
         return warrper
     return deco
 
+def to_asgi(func:t.Awaitable,config:Config):
+    @asgi_application(config)
+    async def warrper(request):
+        return await func(request)
+    return warrper
+
 def run_simple(
     app:t.Awaitable,
     **kwagrs
@@ -22,6 +28,6 @@ def run_simple(
     from uvicorn.main import run
 
     run(
-        f'{app.__module__}:{app.__name__}',
+        app=app,
         **kwagrs
     )
