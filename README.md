@@ -31,9 +31,9 @@ if __name__ == '__main__':
 # To Do
 - Custom request class ✅
 - Add Jinjia2 to the box ✅
-- Full session ❌
+- Full session ✅
 - JSON session ❌
-- Add security to the cookies ❌
+- Add security to the cookies ✅
 - Add Exceptions to the box ❌
 - Add routing to the box ✅
 - Add static files support ✅ 
