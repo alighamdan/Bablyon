@@ -22,8 +22,15 @@ class HTTPRequestHandler:
     async def __call__(
         self,
         emit:t.Awaitable,
-        request:Request
+        scope:t.Dict[str,t.Union[bytes,str]],
+        body:str
     ) -> t.Any:
+
+        
+        request = self.config.request_class(
+            scope,
+            body
+        )
 
         if self.config.middlewares != []:
             for mw in self.config.middlewares:
@@ -81,8 +88,6 @@ class RequestBaseHandler:
                 self.config
             ).__call__(
                 emit,
-                Request(
-                    scope,
-                    body=body
-                )
+                scope,
+                body
             )
