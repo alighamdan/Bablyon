@@ -8,7 +8,7 @@ A small ASGI web framework that you can make asynchronous web applications using
 ```py
 import bablyon
 
-@bablyon.to_asgi
+@bablyon.asgi_application()
 async def application(request:bablyon.Request):
     return bablyon.Respone(
         body='Hello from Babylon'
@@ -40,5 +40,5 @@ if __name__ == '__main__':
 - Add static files support ❌
 - Add websocket support ❌
 - Add datastructures to the box ❌
-- Add middleware support ❌
+- Add middleware support ✅
 - Add HTML Exceptions ❌
