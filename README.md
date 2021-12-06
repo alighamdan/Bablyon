@@ -41,3 +41,4 @@ if __name__ == '__main__':
 - Add websocket support ❌
 - Add datastructures to the box ❌
 - Add middleware support ❌
+- Add HTML Exceptions ❌
