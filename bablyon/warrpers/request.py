@@ -6,6 +6,11 @@ from urllib.parse import parse_qsl
 
 import cgi,io
 
+try:
+    from ujson import loads
+except ImportError:
+    from json import loads
+
 class Request:
     r"""
         Request class a paraser for the `receive` args in the ASGI handler
@@ -127,6 +132,13 @@ class Request:
         if not hasattr(self, '_form'):
             self._load_data()
         return self._files
+
+    @property
+    def json(self) -> t.Dict:
+        try:
+            return loads(self.body)
+        except ValueError:
+            pass
 
     def __repr__(self) -> str:
         return f'<Request ({self.method}) ({self.path}) at 0x{id(self)}>'

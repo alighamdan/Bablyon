@@ -32,7 +32,6 @@ if __name__ == '__main__':
 - Custom request class ✅
 - Add Jinjia2 to the box ✅
 - Full session ✅
-- Redis sessions ❌
 - Add security to the cookies ✅
 - Add Exceptions to the box ❌
 - Add routing to the box ✅
