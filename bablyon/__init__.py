@@ -34,4 +34,4 @@ from .security import verfiy
 
 __author__ = 'Zaid Ali'
 __name__ = 'Bablyon'
-__verison__ = '0.1'
+__verison__ = '0.6'
