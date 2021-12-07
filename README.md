@@ -6,24 +6,38 @@ A small ASGI web framework that you can make asynchronous web applications using
 
 # Exmaple 
 ```py
-import bablyon
+from bablyon.application import Bablyon
+from bablyon.router import Router
+from bablyon.staticfile import StaticFile
 
-@bablyon.asgi_application()
-async def application(request:bablyon.Request):
-    return bablyon.Respone(
-        body='Hello from Babylon'
-    )
+
+async def hello(request):
+    print(request.json)
+
+    return f'at {request.path}'
+    
+routers = [
+    Router('/hello',hello)
+]
+
+app = Bablyon(
+    secret_key='hello',
+    routers=routers,
+    middlewares=[]
+)
+
+app.mount('./static',StaticFile('./static'))
 
 if __name__ == '__main__':
-    from bablyon import run_simple
-    from platform import python_version
-    run_simple(
-        app=application,
+    from uvicorn.main import run
+    
+    run(
+        f'test3:app',
         host='localhost',
         port=5000,
-        debug=True,
-        headers=[['Python',f'{python_version()}']]
+        debug=True
     )
+
 ```
 # Author
 - [xArty](https://github.com/xArty4)
