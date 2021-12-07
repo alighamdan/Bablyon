@@ -7,7 +7,7 @@ from bablyon.warrpers import Respone
 from bablyon.config import Config
 
 from bablyon.security import encrypt
-from bablyon.security import verfiy
+
 
 class HTTPRequestHandler:
 

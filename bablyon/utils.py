@@ -56,5 +56,7 @@ def guess_static_file_type(file:io.FileIO):
     file_type = file.name.split('.')[-1]
     if file_type == 'js':
         return 'application/javascript'
-    if file_type == 'css':
+    elif file_type == 'css':
         return 'text/css'
+    else:
+        return 'text/plain'
