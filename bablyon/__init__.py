@@ -25,6 +25,7 @@ from .utils import guess_content_type
 from .utils import guess_static_file_type
 
 from .tools import render
+from .tools import redirect
 
 from .staticfile import StaticFile
 
