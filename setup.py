@@ -4,8 +4,8 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="Babylon",
-    version="0.4",
+    name="bablon",
+    version="0.6",
     author="Zaid Ali",
     author_email="email@xarty.xyz",
     description="A small ASGI web framework",
